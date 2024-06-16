@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --dividerWidth: 20px;
+}
+
 .sea {
   background: #7BB665;
   position: absolute;
@@ -17,9 +21,24 @@
   margin: 0 auto;
   max-width: 642.8px;
   background-color: #727477;
+  position: relative;
+  overflow: hidden;
 }
 
 .road-track {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+}
+
+.divider, .divider-line {
+  display: block;
+  width: var(--dividerWidth);
+  height: 100%;
+}
+
+.eachDivider, .eachLine {
+  display: block;
 }
