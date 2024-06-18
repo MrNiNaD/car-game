@@ -223,3 +223,15 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => {
   setDirection(e.keyCode, false);
 });
+
+document.querySelector('.top-btn').addEventListener('touchstart', () => setDirection(38, true))
+document.querySelector('.top-btn').addEventListener('touchend', () => setDirection(38, false))
+
+document.querySelector('.right-btn').addEventListener('touchstart', () => setDirection(39, true))
+document.querySelector('.right-btn').addEventListener('touchend', () => setDirection(39, false))
+
+document.querySelector('.bottom-btn').addEventListener('touchstart', () => setDirection(40, true))
+document.querySelector('.bottom-btn').addEventListener('touchend', () => setDirection(40, false))
+
+document.querySelector('.left-btn').addEventListener('touchstart', () => setDirection(37, true))
+document.querySelector('.left-btn').addEventListener('touchend', () => setDirection(37, false))

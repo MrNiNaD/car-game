@@ -15,7 +15,7 @@
   height: 100%;
 }
 
-.playzone {
+.playzone, .controls {
   width: 50%;
   height: 100%;
   margin: 0 auto;
@@ -23,6 +23,10 @@
   background-color: #727477;
   position: relative;
   overflow: hidden;
+}
+
+.controls {
+  display: none;
 }
 
 .road-track {
@@ -77,4 +81,80 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 20px;
+}
+
+@media only screen and (max-width: 900px) {
+  .playzone, .controls {
+    width: 80%;
+    height: calc(100% - 170px);
+  }
+
+  .controls {
+    display: block;
+    height: 170px;
+    width: 100%;
+    background-color: #000;
+    max-width: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .buttons {
+    width: 160px;
+    height: 160px;
+    position: relative;
+  }
+
+  .buttons button {
+    padding: 0;
+    padding-block: 0;
+    border: none;
+    line-height: 0;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    background-color: transparent;
+    position: absolute;
+  }
+
+  .buttons button svg {
+    fill: #fff;
+  }
+
+  .top-btn {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .right-btn {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .right-btn svg {
+    transform: rotate(90deg);
+  }
+
+  .bottom-btn {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .bottom-btn svg {
+    transform: rotate(180deg);
+  }
+
+  .left-btn {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .left-btn svg {
+    transform: rotate(-90deg);
+  }
 }
