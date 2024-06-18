@@ -130,7 +130,7 @@ const newCar = () => {
 
   span.className = "enemy-car";
   span.setAttribute("data-id", key)
-  span.innerHTML = '<img src="./assets/enemy-car2.png" />';
+  span.innerHTML = '<span class="enemy-actual-car"></span><img src="./assets/enemy-car2.png" />';
   
   span.style.top = `${initialTop}px`;
   carPositionMap[key] = initialTop;
@@ -186,7 +186,7 @@ const play = () => {
       eachCar.style.top = `${carPositionMap[dataId]}px`;
     }
 
-    if (!gameOver && doDivsIntersect(eachCar, ourCar)) {
+    if (!gameOver && doDivsIntersect(eachCar?.querySelector('.enemy-actual-car'), ourCar?.querySelector('.our-actual-car'))) {
       gameOver = true;
     }
   })
