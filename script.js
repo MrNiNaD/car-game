@@ -1,8 +1,12 @@
 let speed = null;
+let carCount = 0;
+const initialTop = -150;
+let carPositionMap = {};
 let carPosition = {
   top: 0,
   left: 0,
 };
+let ms = 0;
 
 const keyCodes = {
   37: 'arrowLeft',
@@ -17,6 +21,22 @@ const direction = {
   [keyCodes[39]]: false,
   [keyCodes[40]]: false,
 };
+
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function doDivsIntersect(div1, div2) {
+  const rect1 = div1.getBoundingClientRect();
+  const rect2 = div2.getBoundingClientRect();
+
+  return !(
+    rect1.right < rect2.left ||
+    rect1.left > rect2.right ||
+    rect1.bottom < rect2.top ||
+    rect1.top > rect2.bottom
+  );
+}
 
 const createSetup = () => {
   const roadTrack = document.querySelector('.road-track');
@@ -104,7 +124,33 @@ const driveCar = () => {
   }
 }
 
+const newCar = () => {
+  const key = `car-${carCount}`;
+  const span = document.createElement("span");
+
+  span.className = "enemy-car";
+  span.setAttribute("data-id", key)
+  span.innerHTML = '<img src="./assets/enemy-car2.png" />';
+  
+  span.style.top = `${initialTop}px`;
+  carPositionMap[key] = initialTop;
+  carCount++
+
+  return span
+}
+
 const play = () => {
+  const road = document.querySelector('.road');
+  const allEnemyCar = document.querySelectorAll('.enemy-car');
+  const ourCar = document.querySelector('.our-car');
+  let gameOver = false;
+
+  if (ms === 400) {
+    ms = 0;
+  } else {
+    ms++;
+  }
+
   if (count <= 1) {
     count = 100;
   } else {
@@ -117,13 +163,41 @@ const play = () => {
     }
   }
 
+  if (ms === 0 && allEnemyCar.length < 4) {
+    const elm = newCar();
+    const clientWidth = road?.clientWidth - 100;
+    const result = randomIntFromInterval(0, clientWidth);
+
+    elm.style.left = `${result}px`;
+
+    road.appendChild(elm);
+  }
+
   const roadTrack = document.querySelector('.road-track');
+
+  allEnemyCar.forEach((eachCar) => {
+    const dataId = eachCar.getAttribute("data-id");
+    carPositionMap[dataId] = carPositionMap[dataId] + 0.7;
+
+    if (carPositionMap[dataId] >= road?.clientHeight) {
+      eachCar?.remove();
+      delete carPositionMap[dataId];
+    } else {
+      eachCar.style.top = `${carPositionMap[dataId]}px`;
+    }
+
+    if (!gameOver && doDivsIntersect(eachCar, ourCar)) {
+      gameOver = true;
+    }
+  })
 
   roadTrack.style.top = `-${count}%`;
 
   driveCar();
 
-  window.requestAnimationFrame(play)
+  if (!gameOver) {
+    window.requestAnimationFrame(play)
+  }
 }
 
 window.requestAnimationFrame(play)

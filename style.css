@@ -51,16 +51,20 @@
   z-index: 1;
 }
 
-
-.our-car {
+.our-car, .enemy-car {
+  display: block;
   height: 150px;
   width: 86px;
-  bottom: 10px;
-  left: 40%;
   position: absolute;
 }
 
-.our-car img {
+
+.our-car {
+  bottom: 10px;
+  left: 40%;
+}
+
+.our-car img, .enemy-car img {
   width: 100%;
   height: 100%;
 }
