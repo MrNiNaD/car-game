@@ -158,3 +158,10 @@
     transform: rotate(-90deg);
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .our-car, .enemy-car {
+    height: 115px;
+    width: 70px;
+  }
+}
