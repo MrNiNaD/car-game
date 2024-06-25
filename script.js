@@ -1,12 +1,28 @@
-let speed = null;
-let carCount = 0;
+let speed, carCount, carPositionMap, carPosition, ms;
 const initialTop = -150;
-let carPositionMap = {};
-let carPosition = {
-  top: 0,
-  left: 0,
+
+const setInitalValue = () => {
+  speed = null;
+  carCount = 0;
+  carPositionMap = {};
+  carPosition = {
+    top: 0,
+    left: 0,
+  };
+  ms = 0;
 };
-let ms = 0;
+
+setInitalValue();
+
+const preScreen = document.querySelector('.pre-screen');
+const playBtn = document.querySelector('.play-button');
+
+preScreen.onclick = (e) => e.stopPropagation();
+
+playBtn.onclick = (e) => {
+  createSetup();
+  preScreen.style.display = 'none';
+};
 
 const keyCodes = {
   37: 'arrowLeft',
@@ -37,50 +53,6 @@ function doDivsIntersect(div1, div2) {
     rect1.top > rect2.bottom
   );
 }
-
-const createSetup = () => {
-  const roadTrack = document.querySelector('.road-track');
-  const road = document.querySelector('.road');
-  const ourCar = document.querySelector('.our-car');
-
-  if (roadTrack) {
-    const twoPercent = roadTrack.clientHeight * (2/100);
-    
-    let actualDivider = '';
-    let eachLine = '';
-    let drawLine = false;
-
-    for (let i = 0; i < 100; i++) {
-      actualDivider += `<span class="eachDivider" style="height: ${twoPercent}px; background: ${i % 2 === 0 ? '#ffdf00' : '#000'};"></span>`;
-
-      if (i % 5 === 0) {
-        drawLine = !drawLine;
-      }
-
-      eachLine += `<span class="eachLine" style="height: ${twoPercent}px; background: ${drawLine ? '#fff' : 'transparent'};"></span>`;
-    }
-
-    const divider = `<span class="divider">${actualDivider}</span>`;
-    const dividerLine = `<span class="divider-line">${eachLine}</span>`;
-
-    roadTrack.innerHTML = `${divider}${dividerLine}${divider}`;
-  }
-  
-  if (road && ourCar) {
-    const top = road?.clientHeight - ourCar?.clientHeight - 10;
-    const left = (road?.clientWidth / 2) - (ourCar?.clientWidth / 2);
-
-    ourCar.style.top = `${top}px`;
-    ourCar.style.left = `${left}px`;
-
-    carPosition = {
-      top,
-      left,
-    };
-  }
-}
-
-createSetup()
 
 let count = 100;
 
@@ -200,8 +172,6 @@ const play = () => {
   }
 }
 
-window.requestAnimationFrame(play)
-
 try {
   navigator.getBattery().then((data) => {
     if (data.charging) {
@@ -235,3 +205,49 @@ document.querySelector('.bottom-btn').addEventListener('touchend', () => setDire
 
 document.querySelector('.left-btn').addEventListener('touchstart', () => setDirection(37, true))
 document.querySelector('.left-btn').addEventListener('touchend', () => setDirection(37, false))
+
+const createSetup = (option = {}) => {
+  const roadTrack = document.querySelector('.road-track');
+  const road = document.querySelector('.road');
+  const ourCar = document.querySelector('.our-car');
+
+  if (roadTrack) {
+    const twoPercent = roadTrack.clientHeight * (2/100);
+    
+    let actualDivider = '';
+    let eachLine = '';
+    let drawLine = false;
+
+    for (let i = 0; i < 100; i++) {
+      actualDivider += `<span class="eachDivider" style="height: ${twoPercent}px; background: ${i % 2 === 0 ? '#ffdf00' : '#000'};"></span>`;
+
+      if (i % 5 === 0) {
+        drawLine = !drawLine;
+      }
+
+      eachLine += `<span class="eachLine" style="height: ${twoPercent}px; background: ${drawLine ? '#fff' : 'transparent'};"></span>`;
+    }
+
+    const divider = `<span class="divider">${actualDivider}</span>`;
+    const dividerLine = `<span class="divider-line">${eachLine}</span>`;
+
+    roadTrack.innerHTML = `${divider}${dividerLine}${divider}`;
+  }
+  
+  if (road && ourCar) {
+    const top = road?.clientHeight - ourCar?.clientHeight - 10;
+    const left = (road?.clientWidth / 2) - (ourCar?.clientWidth / 2);
+
+    ourCar.style.top = `${top}px`;
+    ourCar.style.left = `${left}px`;
+
+    carPosition = {
+      top,
+      left,
+    };
+  }
+
+  !option.dontStart && window.requestAnimationFrame(play)
+}
+
+createSetup({ dontStart: true })

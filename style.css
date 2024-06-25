@@ -83,6 +83,28 @@
   border-radius: 20px;
 }
 
+.pre-screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #000000e5;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  width: 50%;
+  max-width: 200px;
+  padding: 10px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 20px;
+  background-color: transparent;
+}
+
 @media only screen and (max-width: 900px) {
   .playzone, .controls {
     width: 80%;
