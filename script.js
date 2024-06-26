@@ -1,4 +1,4 @@
-let speed, carCount, carPositionMap, carPosition, ms;
+let speed, carCount, carPositionMap, carPosition, ms, playing;
 const initialTop = -150;
 
 const setInitalValue = () => {
@@ -10,6 +10,7 @@ const setInitalValue = () => {
     left: 0,
   };
   ms = 0;
+  playing = false;
 };
 
 setInitalValue();
@@ -37,6 +38,10 @@ const direction = {
   [keyCodes[39]]: false,
   [keyCodes[40]]: false,
 };
+
+const whileplaying = () => {
+  
+}
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);

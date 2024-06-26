@@ -105,6 +105,29 @@
   background-color: transparent;
 }
 
+.pause-btn {
+  line-height: 0;
+  background-color: transparent;
+  border: none;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.pause-btn svg {
+  fill: #000;
+  background: #fff;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 39px;
+  height: 37px;
+}
+
 @media only screen and (max-width: 900px) {
   .playzone, .controls {
     width: 80%;
