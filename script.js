@@ -155,7 +155,7 @@ const play = () => {
     }
   }
 
-  if (ms === 0 && allEnemyCar.length < 4) {
+  if (ms === 0 && allEnemyCar.length < 3) {
     const elm = newCar();
     const clientWidth = road?.clientWidth - 100;
     const result = randomIntFromInterval(0, clientWidth);
