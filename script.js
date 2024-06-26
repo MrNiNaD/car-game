@@ -1,4 +1,4 @@
-let speed, carCount, carPositionMap, carPosition, ms, playing;
+let speed, carCount, carPositionMap, carPosition, ms, playing, score, scoreMs;
 const initialTop = -150;
 
 const setInitalValue = () => {
@@ -10,6 +10,8 @@ const setInitalValue = () => {
     left: 0,
   };
   ms = 0;
+  score = 0;
+  scoreMs = 0;
   playing = false;
 };
 
@@ -19,6 +21,7 @@ const preScreen = document.querySelector('.pre-screen');
 const playBtn = document.querySelector('.play-button');
 const resumeBtn = document.querySelector('.resume-button');
 const pauseButton = document.querySelector('.pause-btn');
+const scoreElm = document.querySelector('.score');
 
 preScreen.onclick = (e) => e.stopPropagation();
 
@@ -131,6 +134,19 @@ const gamePause = () => {
   resumeBtn.style.display = 'block';
 }
 
+const countScore = () => {
+  scoreMs++;
+
+  if (scoreMs === 60) {
+    score++;
+    scoreMs = 0;
+    
+    if (score !== Number(scoreElm.innerHTML)) {
+      scoreElm.innerHTML = score;
+    }
+  }
+}
+
 const play = () => {
   const road = document.querySelector('.road');
   const allEnemyCar = document.querySelectorAll('.enemy-car');
@@ -154,6 +170,8 @@ const play = () => {
       count = count - diff;
     }
   }
+
+  countScore();
 
   if (ms === 0 && allEnemyCar.length < 3) {
     const elm = newCar();

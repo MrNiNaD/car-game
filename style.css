@@ -129,6 +129,20 @@
   height: 37px;
 }
 
+.score {
+  border: 2px solid #000;
+  background-color: #fff;
+  padding: 1px 10px;
+  min-width: 50px;
+  z-index: 1;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  border-radius: 999px;
+  font-weight: 900;
+  text-align: right;
+}
+
 .resume-button {
   display: none;
 }
