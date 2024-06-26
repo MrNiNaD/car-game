@@ -128,6 +128,10 @@
   height: 37px;
 }
 
+.resume-button {
+  display: none;
+}
+
 @media only screen and (max-width: 900px) {
   .playzone, .controls {
     width: 80%;

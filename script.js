@@ -17,13 +17,26 @@ setInitalValue();
 
 const preScreen = document.querySelector('.pre-screen');
 const playBtn = document.querySelector('.play-button');
+const resumeBtn = document.querySelector('.resume-button');
+const pauseButton = document.querySelector('.pause-btn');
 
 preScreen.onclick = (e) => e.stopPropagation();
 
-playBtn.onclick = (e) => {
+playBtn.onclick = () => {
+  playing = true;
   createSetup();
   preScreen.style.display = 'none';
 };
+
+resumeBtn.onclick = () => {
+  playing = true;
+  window.requestAnimationFrame(play);
+  preScreen.style.display = 'none';
+}
+
+pauseButton.onclick = () => {
+  playing = false;
+}
 
 const keyCodes = {
   37: 'arrowLeft',
@@ -38,10 +51,6 @@ const direction = {
   [keyCodes[39]]: false,
   [keyCodes[40]]: false,
 };
-
-const whileplaying = () => {
-  
-}
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -116,6 +125,12 @@ const newCar = () => {
   return span
 }
 
+const gamePause = () => {
+  preScreen.style.display = 'flex';
+  playBtn.style.display = 'none';
+  resumeBtn.style.display = 'block';
+}
+
 const play = () => {
   const road = document.querySelector('.road');
   const allEnemyCar = document.querySelectorAll('.enemy-car');
@@ -172,9 +187,16 @@ const play = () => {
 
   driveCar();
 
-  if (!gameOver) {
-    window.requestAnimationFrame(play)
+  if (gameOver) {
+    return;
   }
+
+  if (!playing) {
+    gamePause();
+    return;
+  }
+
+  window.requestAnimationFrame(play)
 }
 
 try {
