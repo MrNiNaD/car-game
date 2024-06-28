@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 :root {
@@ -90,6 +91,7 @@
   background-color: #000000e5;
   z-index: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -144,6 +146,17 @@
 }
 
 .resume-button {
+  display: none;
+}
+
+.your-score, .game-over {
+  color: #fff;
+  margin-top: 10px;
+}
+
+.game-over {
+  font-size: 25px;
+  margin-bottom: 10px;
   display: none;
 }
 

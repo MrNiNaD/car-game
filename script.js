@@ -13,6 +13,10 @@ const setInitalValue = () => {
   score = 0;
   scoreMs = 0;
   playing = false;
+
+  document.querySelectorAll('.enemy-car').forEach((eachEnemyCar) => {
+    eachEnemyCar.remove();
+  });
 };
 
 setInitalValue();
@@ -20,12 +24,23 @@ setInitalValue();
 const preScreen = document.querySelector('.pre-screen');
 const playBtn = document.querySelector('.play-button');
 const resumeBtn = document.querySelector('.resume-button');
+const yourScore = document.querySelector('.your-score');
+const gameOver = document.querySelector('.game-over');
 const pauseButton = document.querySelector('.pause-btn');
 const scoreElm = document.querySelector('.score');
+
+yourScore.innerHTML = 'Your Highest Score: 0';
+
+const hideAll = () => {
+  [playBtn, resumeBtn, yourScore, gameOver].forEach((eachElm) =>  {
+    eachElm.style.display = 'none';
+  })
+}
 
 preScreen.onclick = (e) => e.stopPropagation();
 
 playBtn.onclick = () => {
+  setInitalValue();
   playing = true;
   createSetup();
   preScreen.style.display = 'none';
@@ -129,9 +144,21 @@ const newCar = () => {
 }
 
 const gamePause = () => {
+  hideAll();
+
   preScreen.style.display = 'flex';
-  playBtn.style.display = 'none';
   resumeBtn.style.display = 'block';
+}
+
+const gameOverScreen = () => {
+  hideAll();
+
+  preScreen.style.display = 'flex';
+  playBtn.style.display = 'block';
+  gameOver.style.display = 'block';
+  yourScore.style.display = 'block';
+
+  yourScore.innerHTML = `Your Score: ${score}`
 }
 
 const countScore = () => {
@@ -206,6 +233,7 @@ const play = () => {
   driveCar();
 
   if (gameOver) {
+    gameOverScreen();
     return;
   }
 
