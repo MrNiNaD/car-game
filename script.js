@@ -29,7 +29,7 @@ const gameOver = document.querySelector('.game-over');
 const pauseButton = document.querySelector('.pause-btn');
 const scoreElm = document.querySelector('.score');
 
-yourScore.innerHTML = 'Your Highest Score: 0';
+yourScore.innerHTML = `Your Highest Score: ${localStorage.getItem("highscore") ?? 0}`;
 
 const hideAll = () => {
   [playBtn, resumeBtn, yourScore, gameOver].forEach((eachElm) =>  {
@@ -158,7 +158,13 @@ const gameOverScreen = () => {
   gameOver.style.display = 'block';
   yourScore.style.display = 'block';
 
-  yourScore.innerHTML = `Your Score: ${score}`
+  const highestScore = localStorage.getItem("highscore") ?? 0;
+
+  if (score > highestScore) {
+    localStorage.setItem("highscore", score.toString());
+  }
+
+  yourScore.innerHTML = `Your Score: ${score} ${score > highestScore ? '(New Highest)' : ''}`
 }
 
 const countScore = () => {
