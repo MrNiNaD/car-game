@@ -75,13 +75,13 @@
 }
 
 .our-actual-car, .enemy-actual-car {
-  width: 88%;
+  width: 76%;
   height: 97%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 20px;
+  background-color: rgba(255, 255, 0, 0.564);
 }
 
 .pre-screen {
