@@ -187,11 +187,10 @@ const countScore = () => {
     score++;
     scoreMs = 0;
 
-    if (score % 30 === 0) {
+    if (score % 20 === 0) {
       speedIncreaserMap.roadSpeed = (speedIncreaserMap?.roadSpeed ?? 0) + 0.2;
       speedIncreaserMap.carSpeed = (speedIncreaserMap?.roadSpeed ?? 0) + 0.3;
       speedIncreaserMap.carSpawn = (speedIncreaserMap?.carSpawn ?? 0) + 50;
-      console.log(speedIncreaserMap);
     }
     
     if (score !== Number(scoreElm.innerHTML)) {
@@ -206,7 +205,6 @@ const play = () => {
   const ourCar = document.querySelector('.our-car');
   let gameOver = false;
 
-  console.log("compute", Math.max(400 - (speedIncreaserMap?.carSpawn ?? 0), 100), ms);
   if (ms >= Math.max(400 - (speedIncreaserMap?.carSpawn ?? 0), 100)) {
     ms = 0;
   } else {
