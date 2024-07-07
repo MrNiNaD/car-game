@@ -1,8 +1,20 @@
-let speed, carCount, carPositionMap, carPosition, ms, playing, score, scoreMs;
+let speed, carCount, carPositionMap, carPosition, ms, playing, score, scoreMs, speedIncreaserMap;
 const initialTop = -150;
 
 const setInitalValue = () => {
-  speed = null;
+  try {
+    navigator.getBattery().then((data) => {
+      if (data.charging) {
+        speed = 50;
+      } else {
+        speed = null;
+      }
+    })
+    
+  } catch (error) {
+    speed = null;
+  }
+
   carCount = 0;
   carPositionMap = {};
   carPosition = {
@@ -13,6 +25,7 @@ const setInitalValue = () => {
   score = 0;
   scoreMs = 0;
   playing = false;
+  speedIncreaserMap = {};
 
   document.querySelectorAll('.enemy-car').forEach((eachEnemyCar) => {
     eachEnemyCar.remove();
@@ -173,6 +186,13 @@ const countScore = () => {
   if (scoreMs === 60) {
     score++;
     scoreMs = 0;
+
+    if (score % 30 === 0) {
+      speedIncreaserMap.roadSpeed = (speedIncreaserMap?.roadSpeed ?? 0) + 0.2;
+      speedIncreaserMap.carSpeed = (speedIncreaserMap?.roadSpeed ?? 0) + 0.3;
+      speedIncreaserMap.carSpawn = (speedIncreaserMap?.carSpawn ?? 0) + 50;
+      console.log(speedIncreaserMap);
+    }
     
     if (score !== Number(scoreElm.innerHTML)) {
       scoreElm.innerHTML = score;
@@ -186,7 +206,8 @@ const play = () => {
   const ourCar = document.querySelector('.our-car');
   let gameOver = false;
 
-  if (ms === 400) {
+  console.log("compute", Math.max(400 - (speedIncreaserMap?.carSpawn ?? 0), 100), ms);
+  if (ms >= Math.max(400 - (speedIncreaserMap?.carSpawn ?? 0), 100)) {
     ms = 0;
   } else {
     ms++;
@@ -195,7 +216,7 @@ const play = () => {
   if (count <= 1) {
     count = 100;
   } else {
-    const diff = 0.5;
+    const diff = 0.5 + (speedIncreaserMap?.roadSpeed ?? 0);
 
     if (speed) {
       count = count - (diff * speed/100);
@@ -206,7 +227,7 @@ const play = () => {
 
   countScore();
 
-  if (ms === 0 && allEnemyCar.length < 3) {
+  if (ms === 0) {
     const elm = newCar();
     const clientWidth = road?.clientWidth - 100;
     const result = randomIntFromInterval(0, clientWidth);
@@ -220,7 +241,7 @@ const play = () => {
 
   allEnemyCar.forEach((eachCar) => {
     const dataId = eachCar.getAttribute("data-id");
-    carPositionMap[dataId] = carPositionMap[dataId] + 0.7;
+    carPositionMap[dataId] = carPositionMap[dataId] + 0.7 + (speedIncreaserMap?.carSpeed ?? 0);
 
     if (carPositionMap[dataId] >= road?.clientHeight) {
       eachCar?.remove();
@@ -249,16 +270,6 @@ const play = () => {
   }
 
   window.requestAnimationFrame(play)
-}
-
-try {
-  navigator.getBattery().then((data) => {
-    if (data.charging) {
-      speed = 50;
-    }
-  })
-  
-} catch (error) {
 }
 
 const setDirection = (keyCode, flag) => {
